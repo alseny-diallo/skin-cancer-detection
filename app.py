@@ -9,12 +9,8 @@ app = Flask(__name__)
 model = load_model('skin_cancer_model.h5')
 
 classes_list = [
-    'actinic keratosis',
-    'basal cell carcinoma',
-    'dermatofibroma',
     'melanoma',
     'nevus',
-    'seborrheic keratosis',
     'squamous cell carcinoma',
     'vascular lesion'
 ]
@@ -37,13 +33,12 @@ def predict():
             x = img_to_array(img) / 255.0
             x = np.expand_dims(x, axis=0)
 
-            # Prédiction
             predictions = model.predict(x)
             print (predictions)
             predicted_class_index = np.argmax(predictions)
             label = classes_list[predicted_class_index]
 
-            # Afficher le résultat
+        
             return render_template("result.html", label=label, file_path=file_path)
 
 if __name__ == '__main__':
